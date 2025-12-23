@@ -39,6 +39,7 @@ if not csv_file_path:
 
  """
 
+"""
 import os # needed for validating the file path and file exceptions 
 
 # Before we ask for the filepath to the user we need to provide them with the current directory that we are in 
@@ -74,6 +75,62 @@ else:
 # using pandas to do operations on the file
 
 import pandas as pd
+
+
+
+"""
+
+from pathlib import Path
+
+print("=" * 80)
+print("CSV Health Tracker")
+print("A python tool that checks the status of the CSV file before heading down the data workflow.")
+print("Please provide the path to the 'CSV file'")
+print("Example: /User/Desktop/Documents/example.csv")
+print("=" * 80)
+
+
+print("Please provide the file path to the specific CSV file")
+user_input = input().strip()
+
+while not user_input:
+    print("The input provided is empty. Please provide the file path.")
+    user_input = input("Enter file path: ").strip()
+
+file_path = Path(user_input)
+
+
+"""
+print(f"Checking if the provided file_path exists.{file_path}")
+if file_path.exists():
+    print("The file path exists")
+
+    print("Checking is the file path leads to a file.")
+    if file_path.is_file():
+        print("The given filepath leads to the file")
+        if file_path.suffix.lower() == '.csv':
+            print("The given filepath leads to a csv file. Now we will check the status of the file")
+    else:
+        print("The given filepath doesnot lead to a file. Please provide a file path that leads to a file.")
+"""
+
+# Check 1: Does the file path exist?
+if not file_path.exists():
+    print(f"Error: '{file_path}' does not exist")
+    exit()
+
+# Check 2: Is it a file?
+if not file_path.is_file():
+    print(f"Error: '{file_path}' is a directory, not a file")
+    exit()
+
+# Check 3: Is it a csv?
+if file_path.suffix.lower() != '.csv':
+    print(f"Error: '{file_path}' is not a CSV file.")
+    exit()
+
+
+print(" File is valid. Beginning analysis")
 
 
 
