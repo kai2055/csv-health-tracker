@@ -1,85 +1,4 @@
 
-"""
-CSV Health Checker +  Log Analyzer
-
-A python tool that inspects CSV files for data quality issues (missing value, wrong data types, outliers)
-and analyzes log files to detect errors, warnings and anomalies. It provides clear summaries and reports,
-helping you quickly understand your data and system bahevior.
-
-"""
-
-
-
-# First part of the project - Take the file path and the filename from the user and then see if the file exist
-#  or if the path has been given in the correct format to raise exception
-# FileNotFoundError, Empty input, right type file and is it a file itself
-
-"""
-
-print("Welcome to CSV Health Checker. Please provide your specific csv filename along with the correct path.")
-print("This python tool provides a pre-checking and validation of the apecific file before it can be further passed down in the piplrline for processing or discarded.")
-csv_file_path = input()
-
-"""
-
-
-print("CSV Health Checker")
-print("This tool provides you with the comprehensive summary of the csv file file before it goes further down the pipeline.")
-print("Provide the path to the CSV file you want to validate.")
-print("Example: C:/Users/YourName/Desktop/data.csv")
-print()
-
-
-
-"""
-csv_file_path = input("Enter csv file path: ")
-
-if not csv_file_path:
-    print("The filename is empty. Please enter the csv file name.")
-
- """
-
-"""
-import os # needed for validating the file path and file exceptions 
-
-# Before we ask for the filepath to the user we need to provide them with the current directory that we are in 
-# since we want relative path to locate the file that the user is giving
-
-current_directory = os.getcwd()
-print(f"This is our current directory - {current_directory} . Please provide the path to you file while considering the current directory ")
-
-user_file_path = input()
-
-# After taking the file path we want to make sure that the file exists
-# Here we will be specifically checking if the path provided leads to file or not
-
-
-print(f"\n Checking if '{user_file_path}' exists...")
-
-# Checking if the user provided us with empty input
-
-if not user_file_path:
-    print("The given input is empty. Please enter the file path to the CSV file.")
-
-if os.path.exists(user_file_path):
-    print(f"The given file exists. Now we will begin further processing.")
-else:
-    print(f" The given file doesnot exist. Please make sure that you gave the correct file path")
-
-
-# Till now what we have basically done is checck whther the input is empty 
-# as well as whether the given path leads to file or not
-# now we need to make sure that the file is csv 
-
-
-# using pandas to do operations on the file
-
-import pandas as pd
-
-
-
-"""
-
 from pathlib import Path
 
 print("=" * 80)
@@ -100,19 +19,7 @@ while not user_input:
 file_path = Path(user_input)
 
 
-"""
-print(f"Checking if the provided file_path exists.{file_path}")
-if file_path.exists():
-    print("The file path exists")
 
-    print("Checking is the file path leads to a file.")
-    if file_path.is_file():
-        print("The given filepath leads to the file")
-        if file_path.suffix.lower() == '.csv':
-            print("The given filepath leads to a csv file. Now we will check the status of the file")
-    else:
-        print("The given filepath doesnot lead to a file. Please provide a file path that leads to a file.")
-"""
 
 # Check 1: Does the file path exist?
 if not file_path.exists():
@@ -131,6 +38,118 @@ if file_path.suffix.lower() != '.csv':
 
 
 print(" File is valid. Beginning analysis")
+
+# getting the filename
+user_file = file_path.name
+
+import pandas as pd
+
+# reading the file with pandas
+df = pd.read_csv(file_path)
+
+print("=" * 80)
+print(f"DIAGNOSIS REPORT OF {user_file}:")
+print("=" * 80)
+
+
+print(f"Number of Rows and Columns: {df.shape}")
+
+print("\nColumn Names:")
+column_names = df.columns.tolist()
+
+# Check if pandas assigned default numeric column names (0, 1,2 ...)
+# This happens when CSV has no header row
+has_default_names = all(isinstance(col, int) for col in df.columns)
+
+if has_default_names:
+    print("WARNNING: No column headers detected (using default names: 0, 1,2,....)")
+    print((f"Columns: {column_names}"))
+else: print(f"Columns: {column_names}")
+
+# Check for duplicate column names
+duplicate_columns = df.columns[df.columns.duplicated()].tolist()
+
+if duplicate_columns:
+    print(f"WARNING: Duplicate column names detected: {duplicate_columns}")
+
+# Number of duplicated rows
+num_duplicated_rows = df.duplicated().sum() # Total count
+
+print(f"Number of duplicated rows: {num_duplicated_rows}")
+
+# The data type of the columns as inferred by pandas
+print(f"Data types:\n{df.dtypes}")
+
+# Empty columns
+empty_cols = df.columns[df.isna().all()].tolist()
+
+if empty_cols:
+    print(f"WARNNING: Empty columns detected: {empty_cols} ")
+
+# Empty rows
+empty_rows = df[df.isna().all(axis=1)]
+num_empty_rows = len(empty_rows)
+
+print(f"Number of completely empty rows: {num_empty_rows}")
+
+# Showing the basic statistics of all the columns; numeric as well as non-numeric
+print("Basic Statistics: ")
+print(df.describe(include='all'))
+
+# Whitespace pollution (flag if beyond threshold)
+
+# Check each string column for whitespace pollution
+
+threshold = 10 # 10% threshold
+
+for col in df.select_dtypes(include='object').columns:
+    has_whitespace = df[col].apply(lambda x: isinstance(x, str) and x != x.strip())
+    whitespace_count = has_whitespace.sum()
+    whitespace_pct = (whitespace_count / len(df)) * 100
+
+    if whitespace_pct > threshold: 
+        print(f" Column '{col}': {whitespace_pct:.1f}% of values have whitespace")
+
+
+
+
+
+"""
+AREAS FOR IMPROVEMENT
+
+1. ⚠️ No encoding error handling: If the file has encoding issues (non-UTF-8),
+ pandas will crash with UnicodeDecodeError.
+
+2. ⚠️ No handling for malformed CSV: If the CSV is corrupted or has inconsistent 
+ columns, pandas might fail or behave unexpectedly
+
+3. ❌ Everything is in a single linear script: No functions, no reusability
+
+4. ❌ Lots of commented-out code: The top ~60 lines are old attempts. This clutters the file.
+
+5. ❌ Hard to test: Can't test individual checks without running the entire script
+
+6. ❌ Hard to extend: Adding new checks requires inserting code in the middle of the script
+
+7. ❌ Missing exception handling: No try/except around pd.read_csv()
+
+8. ⚠️ No if __name__ == "__main__": block: Not critical for a script, but good practice
+
+9. ⚠️ Data types output is raw pandas: df.dtypes prints as a Series, which can be hard to read for large files
+   ⚠️ df.describe() can be overwhelming: For files with 50+ columns, this becomes unreadable
+   ⚠️ Missing summary at the end: No final "✓ File passed all checks" or "⚠ Found 3 issues"
+
+"""
+
+
+
+
+
+
+
+
+
+
 
 
 
