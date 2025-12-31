@@ -1,0 +1,29 @@
+
+# Configuration for CSV Health Tracker
+# Settings that might change between runs
+
+validation:
+  # Percentage threshold for whitespace pollution warning
+  whitespace_threshold_pct: 10
+
+  # Maximum allowed percentage of duplicate rows
+  max_duplicate_pct: 5
+
+  # Maximum allowed percentage of missing values values per column
+  max_missing_pct: 30
+
+output:
+  # Directory for reports
+  directory: "output"
+
+  # Report filename (will add timestamp)
+  filename_prefix: "health_report"
+
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+
+  # Write logs to file?
+  log_to_file: true
+
+  
