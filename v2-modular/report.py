@@ -39,6 +39,10 @@ class HealthReportGenerator:
             config: Configuration dictionary from config.yaml
 
         """
+        self.logger = logger
+        self.config = config
+
+
     
     def _create_output_directory(self) -> Path:
         """
@@ -502,26 +506,26 @@ class HealthReportGenerator:
     
 
     # Convenience function for simple usage
-    def generate_health_report(results: Dict[str, Any], logger, config: Dict[str, Any]) -> Path:
-        """
-        Convienence function to generate and save a health report
+def generate_health_report(results: Dict[str, Any], logger, config: Dict[str, Any]) -> Path:
+    """
+    Convienence function to generate and save a health report
 
-        Args:
-            result: Validation results dictionary
-            logger: Logger instance
-            config: Configuration dictionary
+    Args:
+        result: Validation results dictionary
+        logger: Logger instance
+        config: Configuration dictionary
 
-        Returns:
-            Path to saved report file
+    Returns:
+        Path to saved report file
 
-        Raises:
-            ReportGenerationError: If report generation fails
+    Raises:
+    ReportGenerationError: If report generation fails
         
         
-        """
+    """
 
-        generator = HealthReportGenerator(logger, config)
-        return generator.generate_and_save(results)
+    generator = HealthReportGenerator(logger, config)
+    return generator.generate_and_save(results)
 
 
 
