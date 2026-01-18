@@ -85,15 +85,3 @@ def test_log_levels():
     print("\n")
 
 
-if __name__ == "__main__":
-    print("\n" + "=" * 80)
-    print("LOGGER MODULE TESTING")
-    print("=" * 80 + "\n")
-
-    test_basic_logger()
-    test_logger_with_config()
-    test_log_levels()
-
-    print("=" * 80)
-    print("ALL TESTS COMPLETE")
-    print("=" * 80)

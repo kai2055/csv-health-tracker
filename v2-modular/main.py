@@ -55,8 +55,7 @@ def print_banner():
 
 def print_usage():
     """
-    Print usage instructions.
-
+    
     Shows the user how to run the program correctly.
     
     """

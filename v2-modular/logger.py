@@ -7,7 +7,7 @@ Configures Python's logging system for the CSV Health Tracker.
 Why seperate logging setup?
 - Consistent log format across all modules
 - easy to change logging behavior in one place
-- Professional practice: logging is infrastructure, not business logic
+
 
 Key Concepts:
 - Logger - The object you call to log messages (logger.info("message"))
@@ -35,7 +35,7 @@ def setup_logger(
     """
     Set up and configure a logger with console and optional file output.
 
-    This is the main function you call to get a logger for you module.
+    This is the main function you call to get a logger for your module.
 
     Args:
         name: Logger name (usually module name or app name)
@@ -50,7 +50,7 @@ def setup_logger(
 
     # Get logger instance
     # If a logger with this name already exists, Python returns it
-    # This prevents duplicate handlers if setup_logger() is called  multiple times
+    
     logger = logging.getLogger(name)
 
     # Set the base logging level
@@ -91,13 +91,10 @@ def _create_file_handler(log_dir: str, log_level: str) -> logging.FileHandler:
     """
     Create a file handler for writing logs to a file.
 
-    This is a PRIVAATE helper function (leading underscore _)
+    This is a PRIVAATE helper function
     Only used inside this module
 
-    Why log to files?
-    - Persistent record of what happened
-    - can review later if something goes wrong
-    - professional applications always log to file
+    
 
     Args:
         log_dir: Directory where log files will be stored
@@ -161,8 +158,7 @@ def get_logger_from_config(config: dict, name: str = "csv_health_tracker") -> lo
     log_level = config['logging']['level']
     log_to_file = config['logging']['log_to_file']
 
-    # Could also make log_dir configurable in config.yaml
-    # For now, hardcoded to "logs"
+    
 
     log_dir = "logs"
 

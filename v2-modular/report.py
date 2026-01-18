@@ -6,7 +6,7 @@ Generates formatted health reports from CSV validation resullts.
 This module takes the validation results dictionary and creates:
 - Human-readable text reports
 - Saved to output directory with timestamps
-- Clear formatting for eacy reading
+- Clear formatting for easy reading
 
 """
 
@@ -490,7 +490,7 @@ class HealthReportGenerator:
 
     def generate_and_save(self, results: Dict[str, Any]) -> Path:
         """
-        Convinence method: generate and save report in one call
+        Convinience method: generate and save report in one call
         
         Args:
             results: Validation results dictionary

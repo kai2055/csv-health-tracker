@@ -4,10 +4,6 @@ Configuration Management Module
 
 Handles loading and validating configuration from YAML files.
 
-Key Principle: Fail fast with clear errors.
-Better to crash at startup with "Invalid config" than to crash 
-after 10 minutes of processing with a mysterious error.
-
 """
 
 import yaml
@@ -18,11 +14,6 @@ class ConfigurationError(Exception):
     """
     Custom exception for configuration problems.
 
-    Why create our own exception?
-    - Makes it clear WHAT kind of error occured
-    - Lets calling code handle config errors differently than other errors
-    - More professional than generic Exception
-    
     """
     pass
 
@@ -188,10 +179,10 @@ def get_validation_thresholds(config: Dict[str, Any]) -> Dict[str, float]:
     Extract validation thresholds from config.
 
     Helper function to get all validation thresholds at once.
-    Makes calling code cleaner.
+    
 
     Args:
-        congig: Configuration dictionary
+        config: Configuration dictionary
 
     Returns:
         Dictionary with thresholds values

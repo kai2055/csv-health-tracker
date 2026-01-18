@@ -3,12 +3,6 @@ Custom Exceptions Module
 
 Defines specific error types for the CSV Health Tracker.
 
-Why custom exceptions?
-- More descriptive than generic Exception
-- Easier to handle different error types seperately
-- Better error messages for users and logs
-- Professional practice in procuction code
-
 Exception Hierarchy:
     CSVHealthTrackerError (base)
         ConfigurationError (already in config.py)
@@ -126,7 +120,7 @@ class WhiteSpacePollutionError(ValidationError):
     """
     Raised when whitespace pollution exceeds threshold.
 
-    Whitespace pollution = calls that are empty or only contain spaces/tabs
+    Whitespace pollution = cells that are empty or only contain spaces/tabs
     
     """
     pass
