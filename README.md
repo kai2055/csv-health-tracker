@@ -1,13 +1,8 @@
 # CSV Health Tracker
 
-A command-line tool that validates CSV files for data quality issues before they enter a data pipeline.
+A command-line tool that validates CSV files for data quality issues before they enter a data pipeline. Non-destructive — reports problems without modifying source data.
 
-## What it does
-
-- Detects missing values, duplicate rows, and whitespace pollution
-- Compares findings against configurable thresholds
-- Generates a detailed health report on pass, or a log entry on fail
-- Exits with a clear error message and actionable suggestions
+---
 
 ## Project Structure
 ```
@@ -24,6 +19,18 @@ csv-health-tracker/
     └── requirements.txt # Dependencies
 ```
 
+---
+
+## What it does
+
+- Validates file path, extension, and accessibility
+- Detects missing values, duplicate rows, and whitespace pollution
+- Compares findings against configurable thresholds
+- Generates a detailed health report on pass, or a log entry on fail
+- Exits with a clear error message and actionable suggestions
+
+---
+
 ## How to run locally
 
 ### Plain Python
@@ -35,14 +42,19 @@ python main.py your_file.csv
 
 ### Docker
 ```
+cd v2-modular
 docker build -t csv-health-tracker .
 docker run --rm -v "%cd%":/app/data -v "%cd%/output":/app/output -v "%cd%/logs":/app/logs csv-health-tracker python main.py data/your_file.csv
 ```
+
+---
 
 ## Output
 
 - **Pass**: report saved to `output/health_report_<filename>_<timestamp>.txt`
 - **Fail**: error logged to `logs/csv_health_tracker.log`
+
+---
 
 ## GCP Deployment
 
@@ -50,6 +62,26 @@ Image is stored in Artifact Registry (europe-west3) and deployed as a Cloud Run 
 ```
 gcloud run jobs execute csv-health-tracker-job --region=europe-west3 --wait
 ```
+
+---
+
+## What I learned
+
+### V1
+- Migrating from `os.path` to `pathlib` for modern path handling
+- Defensive programming patterns (guard clauses, fail-fast validation)
+- Pandas data inspection methods
+- Input validation and user-friendly error messaging
+
+### V2
+- Modular architecture — separation of concerns across config, logging, validation, reporting
+- Custom exception hierarchies
+- Configurable thresholds via YAML
+- Production logging patterns
+- Docker — writing Dockerfiles, building images, volume mounts
+- GCP — Artifact Registry, Cloud Run Jobs, gcloud CLI
+
+---
 
 ## Planned improvements
 
