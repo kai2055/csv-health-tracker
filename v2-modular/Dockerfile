@@ -11,4 +11,4 @@ COPY . .
 
 VOLUME ["/app/output", "/app/logs"]
 
-CMD ["python", "main.py"]
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]

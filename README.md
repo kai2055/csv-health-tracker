@@ -55,13 +55,19 @@ docker run --rm -v "%cd%":/app/data -v "%cd%/output":/app/output -v "%cd%/logs":
 - **Fail**: error logged to `logs/csv_health_tracker.log`
 
 ---
-
 ## GCP Deployment
 
-Image is stored in Artifact Registry (europe-west3) and deployed as a Cloud Run Job.
+Image is stored in Artifact Registry (europe-west3) and deployed as a Cloud Run Service.
+
+**Live URL**: https://csv-health-tracker-127482995435.europe-west3.run.app
+
+**Interactive API docs**: https://csv-health-tracker-127482995435.europe-west3.run.app/docs
+
+To redeploy:
 ```
-gcloud run jobs execute csv-health-tracker-job --region=europe-west3 --wait
+gcloud run deploy csv-health-tracker --image=europe-west3-docker.pkg.dev/csv-health-tracker/csv-health-tracker-repo/csv-health-tracker:v2 --region=europe-west3 --platform=managed --allow-unauthenticated --port=8080
 ```
+
 
 ---
 
