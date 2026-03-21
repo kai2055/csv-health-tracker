@@ -89,7 +89,8 @@ gcloud run deploy csv-health-tracker --image=europe-west3-docker.pkg.dev/csv-hea
 
 ---
 
-## Planned improvements
+## Future improvements
 
-- V3: Google Cloud Storage integration for cloud-native file handling
-- V3: FastAPI wrapper for HTTP-based CSV submission
+- GCS integration for storing validation reports in the cloud
+- Authentication layer for the API
+- Support for larger file uploads
