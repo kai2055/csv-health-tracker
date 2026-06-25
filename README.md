@@ -2,6 +2,8 @@
 
 > Validate CSV quality before it reaches your pipeline — not after it breaks something.
 
+This project was built as the first step in a deliberate MLOps portfolio, practicing production patterns on a small, controlled problem.
+
 ![Python](https://img.shields.io/badge/Python-3.10-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-deployed-green) ![Docker](https://img.shields.io/badge/Docker-containerised-blue) ![GCP Cloud Run](https://img.shields.io/badge/GCP-Cloud%20Run-orange)
 
 ---
