@@ -12,11 +12,17 @@ Bad data reaching a pipeline is expensive to debug: by the time it breaks someth
 ![YAML config](https://img.shields.io/badge/config-YAML%20thresholds-CB171E?logo=yaml&logoColor=white)
 ![tests](https://img.shields.io/badge/tests-16-brightgreen)
 
-🔗 **[Live API](https://csv-health-tracker-127482995435.europe-west3.run.app/docs)** — check a file without cloning anything &nbsp;·&nbsp; 🎥 Demo *(coming)* <!-- replace with: 🎥 [Watch demo](VIDEO_URL) -->
+🔗 **[Live API](https://csv-health-tracker-127482995435.europe-west3.run.app/docs)** — check a file without cloning anything &nbsp;·&nbsp; 🎥 [Watch demo](https://www.linkedin.com/in/nikhil-adhikari)
 
-<!-- Screenshot slot — drop a terminal-run or /docs screenshot here:
-![example run](docs/img/example-run.png)
--->
+![CSV Health Tracker demo](docs/img/demo.gif)
+
+**Clean file → `200 passed`:**
+
+![clean file passes validation](docs/img/pass-200.png)
+
+**Dirty file → `422`, flags the bad columns:**
+
+![dirty file fails validation](docs/img/fail.png)
 
 > **Context:** the first project in a deliberate MLOps sprint. It started as a single-file script and grew into a modular, containerised service on Cloud Run with CI/CD. **The problem is small on purpose** — the point wasn't the problem, it was to practice production patterns on something fully controllable.
 
