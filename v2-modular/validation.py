@@ -89,6 +89,7 @@ class CSVValidator:
         # Check 2: Is it a file (not a directory)
         if not file_path_obj.is_file():
             self.logger.error(f"Path is a directory, not a file: {file_path}")
+            raise InvalidCSVFormatError(f"Path is not a file: {file_path}")
 
 
         # Check 3: Is it a CSV file?
@@ -160,7 +161,7 @@ class CSVValidator:
 
         if has_default_names:
             self.logger.warning("No column headers detected (using default names: 0,1,2,....)")
-            results['has_headdrs'] = False
+            results['has_headers'] = False
 
         # Check for duplicate column names
         duplicate_columns = self.df.columns[self.df.columns.duplicated()].tolist()
@@ -347,7 +348,7 @@ class CSVValidator:
         self.logger.info("Gathering basic CSV information...")
 
         return {
-            'filename': self.file_path.name if self.validate_file_path else 'unknown',
+            'filename': self.file_path.name if self.file_path else 'unknown',
             'shape': self.df.shape,
             'columns': self.df.columns.tolist(),
             'dtypes': self.df.dtypes.to_dict(),

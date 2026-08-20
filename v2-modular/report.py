@@ -386,7 +386,7 @@ class HealthReportGenerator:
 
         # Check empty data
         if results['empty_data']['empty_columns']:
-            issues.append(f"Empty columns: {results['empty_data']['empty_column']}")
+            issues.append(f"Empty columns: {results['empty_data']['empty_columns']}")
         if results['empty_data']['empty_row_count'] > 0:
             issues.append(f"Empty rows: {results['empty_data']['empty_row_count']}")
 
